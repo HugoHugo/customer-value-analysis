@@ -26,7 +26,13 @@ def train_model_endpoint(request):
     return is_model, 200 if is_model else 500
 
 def predict_clv_endpoint(request):
-    customer_data = request["customer_data"]
+    customer_id = request["customer_id"]
+    customer_data = request["data"]
+    
     model_path = "../model.jbl"
-    clv_predictions = predict_clv(customer_data, model_path)
-    return clv_predictions, 200
+    clv_prediction = predict_clv(customer_data, model_path)
+
+    return {
+        "customer_id": customer_id,
+        "clv_prediction":clv_prediction
+        }, 200
