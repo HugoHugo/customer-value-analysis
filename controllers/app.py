@@ -43,3 +43,19 @@ def predict_clv_endpoint():
         "customer_id": customer_id,
         "clv_prediction": clv_prediction[0].round()
         }, 200
+
+@app.route("/authed_predict_clv")
+def authed_predict_clv_endpoint():
+    if not request.headers.get("Authorization") == "Bearer weak-password-use-secrets-instead":
+        return {}, 403
+    
+    customer_id = request.json["customer_id"]
+    customer_data = request.json["data"]
+
+    model_path = "model.jbl"
+    clv_prediction = predict_clv([customer_data], model_path)
+
+    return {
+        "customer_id": customer_id,
+        "clv_prediction": clv_prediction[0].round()
+        }, 200
