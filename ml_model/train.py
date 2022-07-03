@@ -1,6 +1,7 @@
 import numpy as np
 from sklearn import neighbors
 from sklearn.model_selection import train_test_split
+from joblib import dump
 
 def hyperparameter_tune(
         X_train: np.ndarray,
@@ -33,6 +34,7 @@ def train_model(
     )
     fitted_model_knn = knn.fit(X_train, y_train)
     y_pred = fitted_model_knn.predict(X_test)
+    dump(knn, filename="../model.jbl")
     return y_pred, fitted_model_knn
 
 def training_function(train_df, predictive_columns, target_column):
@@ -55,5 +57,5 @@ def training_function(train_df, predictive_columns, target_column):
         X_test,
         optimal_n_neighbors
     )
-    
+
     return fitted_model_knn
