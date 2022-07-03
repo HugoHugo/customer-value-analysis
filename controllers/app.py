@@ -28,11 +28,11 @@ def train_model_endpoint(request):
 def predict_clv_endpoint(request):
     customer_id = request["customer_id"]
     customer_data = request["data"]
-    
+
     model_path = "../model.jbl"
     clv_prediction = predict_clv(customer_data, model_path)
 
     return {
         "customer_id": customer_id,
-        "clv_prediction":clv_prediction
+        "clv_prediction": clv_prediction[0]
         }, 200
