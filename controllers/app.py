@@ -1,5 +1,6 @@
 
-from ml_model import train
+from ml_model.train import training_function
+from ml_model.predict import predict_clv
 from ml_model.preprocess import load_and_preprocess
 
 predictive_columns = [
@@ -15,9 +16,17 @@ def train_model_endpoint(request):
     gdp_filepath = request["gdp_filepath"]
     train_df = load_and_preprocess(train_filepaths, gdp_filepath)
     
-    model = train.training_function(
+    model = training_function(
         train_df,
         predictive_columns,
         target_column)
     
-    return bool(model)
+    is_model = bool(model)
+    
+    return is_model, 200 if is_model else 500
+
+def predict_clv_endpoint(request):
+    customer_data = request["customer_data"]
+    model_path = "../model.jbl"
+    clv_predictions = predict_clv(customer_data, model_path)
+    return clv_predictions, 200
