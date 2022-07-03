@@ -16,6 +16,7 @@ gdp_df['gdp_per_capita'] = gdp_df['gdp_per_capita'].apply(lambda x: x.lstrip("$"
 # %%
 train_df = df
 train_df = train_df.drop("State", axis=1)
+train_df = train_df.rename({"Customer Lifetime Value":"clv"},axis=1)
 #%%
 train_df["state_gdp_percapita"] = df["State"].apply(lambda state:  gdp_df[gdp_df['state'] == state]["gdp_per_capita"].values[0])
 train_df["state_gdp_percapita"] = train_df["state_gdp_percapita"].astype(int)
@@ -46,7 +47,7 @@ predictive_columns = [
     "EmploymentStatus",
     "Income"]
 # %%
-target_column = "Customer Lifetime Value"
+target_column = "clv"
 # %%
 train_df[[target_column] + predictive_columns].head()
 # %%
