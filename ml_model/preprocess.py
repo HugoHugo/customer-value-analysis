@@ -1,5 +1,6 @@
 #%%
 import pandas as pd
+from sklearn.model_selection import train_test_split
 # %%
 df = pd.read_csv("../WA_Fn-UseC_-Marketing-Customer-Value-Analysis.csv")
 # %%
@@ -49,5 +50,10 @@ predictive_columns = [
 # %%
 target_column = "clv"
 # %%
-train_df[[target_column] + predictive_columns].head()
+X = train_df[predictive_columns].to_numpy()
+y = train_df[target_column].to_numpy()
+# %%
+X_train, X_test, y_train, y_test = \
+    train_test_split(X, y, test_size=0.25, random_state=525)
+
 # %%
