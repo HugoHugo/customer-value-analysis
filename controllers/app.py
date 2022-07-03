@@ -34,5 +34,5 @@ def predict_clv_endpoint(request):
 
     return {
         "customer_id": customer_id,
-        "clv_prediction": clv_prediction[0]
+        "clv_prediction": clv_prediction[0].round()
         }, 200
