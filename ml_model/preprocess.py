@@ -1,6 +1,8 @@
 #%%
 import pandas as pd
 from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn import neighbors
 # %%
 df = pd.read_csv("../WA_Fn-UseC_-Marketing-Customer-Value-Analysis.csv")
 # %%
@@ -56,4 +58,20 @@ y = train_df[target_column].to_numpy()
 X_train, X_test, y_train, y_test = \
     train_test_split(X, y, test_size=0.25, random_state=525)
 
+# %%
+reg = LinearRegression().fit(X_train, y_train)
+reg.score(X_test, y_test)
+# %%
+array_of_mses = []
+for n_neighbors in range(2,15):
+    knn = neighbors.KNeighborsRegressor(n_neighbors, weights="uniform")
+    fitted_model_knn = knn.fit(X_train, y_train)
+    y_pred = fitted_model_knn.predict(X_test)
+    # compute MSE
+    knn_mse = pow(sum(y_test - y_pred) / y_test.shape[0], 2)
+    array_of_mses.append((knn_mse,n_neighbors))
+# %%
+array_of_mses.sort()
+best_nearest_neighbor = array_of_mses[0][1]
+print("best_nearest_neighbor", best_nearest_neighbor)
 # %%
