@@ -76,13 +76,8 @@ curl --location --request GET 'http://127.0.0.1:5000/predict_clv' \
 Response
 ```
 {
-    "customer_id": 656,
-    "data": [
-        1000000,
-        2,
-        1,
-        10000
-    ]
+    "clv_prediction": 4703.0,
+    "customer_id": 656
 }
 ```
 
